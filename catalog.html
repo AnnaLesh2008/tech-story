@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechShop - Каталог</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Freezeframe.js для GIF-анимации -->
+    <link rel="stylesheet" href="https://unpkg.com/freezeframe/dist/freezeframe.min.css">
+    
+    <script src="script.js" defer></script>
+    <!-- Кастомные стили -->
+    <style>
+        /* Параллакс эффект */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 400px;
+            position: relative;
+        }
+        
+        /* Анимации для меню */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-3px);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Анимация карточек товаров */
+        .product-card {
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Темная тема */
+        [data-bs-theme="dark"] .bg-light {
+            background-color: #343a40 !important;
+            color: #f8f9fa;
+        }
+        
+        [data-bs-theme="dark"] .card {
+            background-color: #343a40;
+            border-color: #495057;
+        }
+        
+        [data-bs-theme="dark"] .card-body {
+            color: #f8f9fa;
+        }
+        
+        [data-bs-theme="dark"] .list-group-item {
+            background-color: #343a40;
+            color: #f8f9fa;
+            border-color: #495057;
+        }
+        
+        /* Анимация кнопок */
+        .btn {
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Анимация модального окна */
+        .modal.fade .modal-dialog {
+            transform: translateY(-50px);
+            transition: all 0.3s ease-out;
+        }
+        
+        .modal.show .modal-dialog {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационное меню -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">TechShop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="catalog.html">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacts.html">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <button id="themeToggle" class="btn btn-sm btn-outline-light me-2">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="btn btn-outline-light me-2">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="card.html" class="btn btn-outline-light position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="card-count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Хлебные крошки -->
+    <nav aria-label="breadcrumb" class="bg-light py-3">
+        <div class="container">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="index.html">Главная</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Каталог</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Параллакс секция -->
+    <div class="parallax" style="background-image: url('img/parallax-phone.jpg')">
+        <div class="container h-100 d-flex align-items-center">
+            <div class="text-white bg-dark bg-opacity-75 p-4 rounded">
+                <h1 class="display-4">Новые поступления</h1>
+                <p class="lead">Самые свежие гаджеты и технологии</p>
+                <a href="#" class="btn btn-primary btn-lg">Смотреть новинки</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Каталог товаров -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Фильтры -->
+            <div class="col-lg-3 mb-4 mb-lg-0">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Фильтры</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title">Категории</h6>
+                        <div class="list-group list-group-flush mb-3">
+                            <a href="#" class="list-group-item list-group-item-action active">Все товары</a>
+                            <a href="#" class="list-group-item list-group-item-action">Смартфоны</a>
+                            <a href="#" class="list-group-item list-group-item-action">Ноутбуки</a>
+                            <a href="#" class="list-group-item list-group-item-action">Наушники</a>
+                            <a href="#" class="list-group-item list-group-item-action">Гаджеты</a>
+                        </div>
+
+                        <h6 class="card-title">Цена</h6>
+                        <div class="mb-3">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" placeholder="От" min="0">
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" class="form-control" placeholder="До" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <h6 class="card-title">Бренды</h6>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="brand1">
+                            <label class="form-check-label" for="brand1">Apple</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="brand2">
+                            <label class="form-check-label" for="brand2">Samsung</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="brand3">
+                            <label class="form-check-label" for="brand3">Xiaomi</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="brand4">
+                            <label class="form-check-label" for="brand4">Huawei</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="brand5">
+                            <label class="form-check-label" for="brand5">Sony</label>
+                        </div>
+
+                        <button class="btn btn-primary w-100">Применить</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Товары -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="mb-0">Все товары</h2>
+                    <div class="d-flex">
+                        <div class="dropdown me-2">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Сортировка
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                                <li><a class="dropdown-item" href="#">По популярности</a></li>
+                                <li><a class="dropdown-item" href="#">По возрастанию цены</a></li>
+                                <li><a class="dropdown-item" href="#">По убыванию цены</a></li>
+                                <li><a class="dropdown-item" href="#">По новизне</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-secondary active"><i class="fas fa-th"></i></button>
+                            <button type="button" class="btn btn-outline-secondary"><i class="fas fa-list"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Карточка товара 1 -->
+                    <div class="col-md-6 col-xl-4
+                    ">
+                        <div class="card h-100 product-card">
+                            <span class="badge bg-danger position-absolute top-0 end-0 m-2">Акция</span>
+                            <img src="img/card_phone.jpg" class="card-img-top" alt="Смартфон X">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Смартфон X</h5>
+                                <p class="card-text">Новый флагман с потрясающей камерой и производительностью.</p>
+                                <div class="mt-auto">
+                                    <p class="h4 text-primary">$799 <small class="text-decoration-line-through text-muted">$899</small></p>
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#productModal1">
+                                        Подробнее
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Карточка товара 2 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card h-100 product-card">
+                            <img src="img/laptop-card.jpg" class="card-img-top" alt="Ноутбук Pro">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Ноутбук Pro</h5>
+                                <p class="card-text">Мощный ноутбук для работы и творчества.</p>
+                                <div class="mt-auto">
+                                    <p class="h4 text-primary">$1299</p>
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#productModal2">
+                                        Подробнее
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Карточка товара 3 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card h-100 product-card">
+                            <span class="badge bg-success position-absolute top-0 end-0 m-2">Новинка</span>
+                            <img src="img/head[hones-card.jpg" class="card-img-top" alt="Наушники Pro">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Наушники Pro</h5>
+                                <p class="card-text">Беспроводные наушники с шумоподавлением.</p>
+                                <div class="mt-auto">
+                                    <p class="h4 text-primary">$249</p>
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#productModal3">
+                                        Подробнее
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Карточка товара 4 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card h-100 product-card">
+                            <img src="img/clocks_card.jpg" class="card-img-top" alt="Умные часы">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Умные часы</h5>
+                                <p class="card-text">Отслеживание активности и уведомления.</p>
+                                <div class="mt-auto">
+                                    <p class="h4 text-primary">$199</p>
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#productModal4">
+                                        Подробнее
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Карточка товара 5 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card h-100 product-card">
+                            <img src="img/pl_card.jpeg" class="card-img-top" alt="Планшет Air">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Планшет Air</h5>
+                                <p class="card-text">Легкий и мощный планшет для работы и развлечений.</p>
+                                <div class="mt-auto">
+                                    <p class="h4 text-primary">$599</p>
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#productModal5">
+                                        Подробнее
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Карточка товара 6 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card h-100 product-card">
+                            <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Хит</span>
+                            <img src="img/console_card.jpg" class="card-img-top freezeframe" data-freezeframe-onhover="true" alt="Игровая консоль">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Игровая консоль</h5>
+                                <p class="card-text">Мощная игровая консоль нового поколения.</p>
+                                <div class="mt-auto">
+                                    <p class="h4 text-primary">$499</p>
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#productModal6">
+                                        Подробнее
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пагинация -->
+                <nav aria-label="Page navigation" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Назад</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Вперед</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Карусель отзывов -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Отзывы наших клиентов</h2>
+            <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img src="img/people1.jpg" class="rounded-circle mb-3" alt="Фото клиента" width="100px">
+                                        <h5 class="card-title">Иван Петров</h5>
+                                        <div class="mb-3">
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                        </div>
+                                        <p class="card-text">"Отличный магазин! Быстрая доставка, качественные товары. Купил смартфон, все работает идеально. Рекомендую!"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img src="img/people3.jpeg" class="rounded-circle mb-3" alt="Фото клиента" width="100px">
+                                        <h5 class="card-title">Елена Смирнова</h5>
+                                        <div class="mb-3">
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star-half-alt text-warning"></i>
+                                        </div>
+                                        <p class="card-text">"Заказала наушники, пришли быстро. Качество звука на высоте, удобно сидят. Единственное - цена немного завышена."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img src="img/people2.jpg" class="rounded-circle mb-3" alt="Фото клиента" width="100px">
+                                        <h5 class="card-title">Алексей Козлов</h5>
+                                        <div class="mb-3">
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                        </div>
+                                        <p class="card-text">"Лучший сервис! Помогли с выбором ноутбука, ответили на все вопросы. Доставили раньше срока. Буду покупать еще!"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальные окна для товаров -->
+    <!-- Модальное окно 1 -->
+    <div class="modal fade" id="productModal1" tabindex="-1" aria-labelledby="productModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel1">Смартфон X</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="img/card_phone.jpg" class="img-fluid rounded mb-3" alt="Смартфон X">
+                            <div class="row g-2">
+
+                                <div class="col-4">
+                                    <img src="img/micro-phone2.jpg" class="img-thumbnail" alt="Миниатюра 2">
+                                </div>
+                                <div class="col-4">
+                                    <img src="img/micro-phone3.jpg" class="img-thumbnail" alt="Миниатюра 3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="text-primary">$799 <small class="text-decoration-line-through text-muted">$899</small></h4>
+                            <p class="text-success">В наличии</p>
+                            <p>Новый флагман с потрясающей камерой и производительностью. Идеальный выбор для тех, кто ценит качество и инновации.</p>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item"><strong>Экран:</strong> 6.7" AMOLED, 120Hz</li>
+                                <li class="list-group-item"><strong>Процессор:</strong> Snapdragon 888</li>
+                                <li class="list-group-item"><strong>Память:</strong> 256GB, 12GB RAM</li>
+                                <li class="list-group-item"><strong>Камера:</strong> 108MP + 12MP + 8MP</li>
+                                <li class="list-group-item"><strong>Батарея:</strong> 5000mAh</li>
+                            </ul>
+                            <div class="d-flex align-items-center mb-3">
+                                <button class="minas btn btn-outline-secondary me-2">-</button>
+                                <input type="text" class="count_plus-minas form-control text-center" value="1" min="1" style="width: 60px;">
+                                <button class="plus btn btn-outline-secondary ms-2">+</button>
+                                <button class="add-to-card phone btn btn-primary ms-auto 3">Добавить в корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно 2 -->
+    <div class="modal fade" id="productModal2" tabindex="-1" aria-labelledby="productModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel2">Ноутбук Pro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="img/laptop-card.jpg" class="img-fluid rounded mb-3" alt="Ноутбук Pro">
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <img src="img/micro-lapt.jpg" class="img-thumbnail" alt="Миниатюра 1">
+                                </div>
+                                <div class="col-4">
+                                    <img src="img/micro-lapt2.jpg" class="img-thumbnail" alt="Миниатюра 2">
+                                </div>
+                                <div class="col-4">
+                                    <img src="img/micro-lapt3.jpg" class="img-thumbnail" alt="Миниатюра 3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="text-primary">$1299</h4>
+                            <p class="text-success">В наличии</p>
+                            <p>Мощный ноутбук для работы и творчества. Идеальное решение для профессионалов.</p>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item"><strong>Экран:</strong> 15.6" 4K, 100% sRGB</li>
+                                <li class="list-group-item"><strong>Процессор:</strong> Intel Core i9-12900H</li>
+                                <li class="list-group-item"><strong>Видеокарта:</strong> NVIDIA RTX 3080</li>
+                                <li class="list-group-item"><strong>Память:</strong> 32GB RAM, 1TB SSD</li>
+                                <li class="list-group-item"><strong>Батарея:</strong> До 8 часов работы</li>
+                            </ul>
+                            <div class="d-flex align-items-center mb-3">
+                                <button class="minas btn btn-outline-secondary me-2">-</button>
+                                <input type="text" class="count_plus-minas form-control text-center" value="1" min="1" style="width: 60px;">
+                                <button class="plus btn btn-outline-secondary ms-2">+</button>
+                                <button class="add-to-card laptop btn btn-primary ms-auto 3">Добавить в корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал -->
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">TechShop</h5>
+                    <p>Лучшие гаджеты и технологии по доступным ценам. Гарантия качества и быстрая доставка.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Каталог</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Смартфоны</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Ноутбуки</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Наушники</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Гаджеты</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Аксессуары</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Помощь</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Доставка и оплата</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Гарантия</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Возврат</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Вопросы и ответы</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Контакты</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Москва, ул. Технологическая, 15</li>
+                        <li><i class="fas fa-phone me-2"></i> +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@techshop.ru</li>
+                        <li><i class="fas fa-clock me-2"></i> Пн-Пт: 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2023 TechShop. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS и зависимости -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Freezeframe.js для GIF-анимации -->
+    <script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script>
+    <!-- Кастомный JS -->
+    <script>
+        // Переключение темы
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-bs-theme', newTheme);
+            
+            // Меняем иконку
+            const icon = this.querySelector('i');
+            if (newTheme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            
+            // Сохраняем выбор пользователя в localStorage
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // Проверяем сохраненную тему при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+            
+            // Устанавливаем правильную иконку
+            const icon = document.getElementById('themeToggle').querySelector('i');
+            if (savedTheme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        });
+        
+        // Инициализация Freezeframe.js
+        document.addEventListener('DOMContentLoaded', function() {
+            new Freezeframe('.freezeframe', {
+                trigger: 'hover',
+                overlay: true
+            });
+        });
+        
+        // Плавная прокрутка для всех ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

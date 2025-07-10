@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechShop - Корзина</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Кастомные стили -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="card_script.js" defer></script>
+</head>
+<body>
+    <!-- Навигационное меню -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">TechShop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="catalog.html">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contacts.html">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <button id="themeToggle" class="btn btn-sm btn-outline-light me-2">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="btn btn-outline-light me-2">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="#" class="btn btn-outline-light position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+
+    <div id="cart-container"></div>
+    <div class="text-center my-4">
+        <button id="clearCartBtn" class="btn btn-danger">Очистить корзину</button>
+        <p>После нажатия на кнопку "очистить" обновите страницу</p>
+    </div>
+    
+
+    <!-- Подвал -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>TechShop</h5>
+                    <p>Лучшие гаджеты по лучшим ценам. Мы работаем для вас с 2010 года.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Магазин</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="catalog.html" class="text-white text-decoration-none">Каталог</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Акции</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Новинки</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Популярное</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Помощь</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Доставка</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Оплата</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Гарантия</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Возврат</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Контакты</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> г. Москва, ул. Технологическая, 42</li>
+                        <li><i class="fas fa-phone me-2"></i> +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@techshop.ru</li>
+                        <li><i class="fas fa-clock me-2"></i> Пн-Пт: 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2023 TechShop. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Кастомные скрипты -->
+    <script src="js/script.js"></script>
+</body>
+</html>
